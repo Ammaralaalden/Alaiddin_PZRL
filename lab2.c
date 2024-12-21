@@ -3,7 +3,45 @@
 #include <string.h>
 #include <stdlib.h>
 
+void remove_lines(const char *filename, const char *line_to_remove) 
+{
+    	FILE *file = fopen(filename, "r");
+    	if (file == NULL) 
+	{
+      	printf("Ошибка при открытии файла.\n");
+        return;
+ 	}
 
+    	FILE *temp_file = fopen("temp.txt", "w");
+   	if (temp_file == NULL) 
+	{
+     		printf("Ошибка при создании временного файла.\n");
+        	fclose(file);
+        	return;
+    	}
+
+    	char line[1000];
+
+    	while (fgets(line, sizeof(line), file)) 
+	{
+        	// Убираем символ новой строки в конце строки
+        	line[strcspn(line, "\n")] = 0;
+
+        	// Сравниваем строку с той, которую нужно удалить
+        	if (strcmp(line, line_to_remove) != 0) 
+		{
+            	// Если строки не совпадают, записываем в временный файл
+            	fputs(line, temp_file);
+            	fputs("\n", temp_file); // Добавляем символ новой строки
+        	}
+    	}
+
+    	fclose(file);
+    	fclose(temp_file);
+
+    	remove(filename);
+    	rename("temp.txt", filename);
+}
 
 void replace_str(const char *filename, const char *old_str, const char *new_str) 
 {

@@ -11,6 +11,12 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 	
+	if (argc > 5)
+	{
+		printf("Слишком много аргументов.\n");
+		return 1;
+	}
+	
 	char* input_file = argv[1];
 
 	FILE* file = fopen(input_file, "r"); // Проверка на корректный ввод названия файла.
@@ -58,8 +64,21 @@ int main(int argc, char* argv[])
 			char* old_str = argv[3];
 			char* new_str = argv[4];
 			replace_str(input_file, old_str, new_str);
-
-
+		}
+		else if (argv[2][1] == 'd')
+		{
+			if (argc != 4)
+			{
+				printf("Некорректное число аргументов.\n");
+				return 1;
+			}
+			char* line_to_remove = argv[3];
+			remove_lines(input_file, line_to_remove);
+		}
+		else
+		{
+		printf("Некорректный 2 аргумент (Допускается использование флагов -i, -d, -r)\n");
+		return 1;
 		}
 
 		

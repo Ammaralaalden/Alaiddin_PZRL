@@ -40,7 +40,6 @@ int main(int argc, char* argv[])
 				else
 				{
 					insert_text_end(input_file, insert_text);
-				
 				}
 			}
 			else
@@ -49,6 +48,21 @@ int main(int argc, char* argv[])
 				return 1;
 			}
 		}
+		else if (argv[2][1] == 'r')
+		{
+			if (argc != 5)
+			{
+				printf("Некорректное число аргументов.\n");
+				return 1;
+			}
+			char* old_str = argv[3];
+			char* new_str = argv[4];
+			replace_str(input_file, old_str, new_str);
+
+
+		}
+
+		
 	}
 	else
 	{
